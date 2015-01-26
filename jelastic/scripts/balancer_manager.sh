@@ -10,7 +10,7 @@ function _rebuild_common(){
 
 function _add_common_host(){
     grep -q "${host}" ${CARTRIDGE_HOME}/versions/1.5.8/conf/haproxy.conf && return 0;
-    count=$(cat ${CARTRIDGE_HOME}/versions/1.5.8/conf/haproxy.conf | grep -o "webserver[0-9]" | sed 's/webserver//g' | sort | tail -n1);
+    count=$(cat ${CARTRIDGE_HOME}/versions/1.5.8/conf/haproxy.conf | grep -o "webserver[0-9]*" | sed 's/webserver//g' | sort -n | tail -n1);
     let "count+=1";
     sed -i "/backend bk_http ###HOSTS/a\server webserver${count} ${host}:80 cookie S${count} check" /opt/repo/versions/1.5.8/conf/haproxy.conf;
 }
