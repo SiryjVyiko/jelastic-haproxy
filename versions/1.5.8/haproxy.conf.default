@@ -46,7 +46,7 @@ stats uri  /haproxy_adm_panel
 stats admin if TRUE
 default_backend bk_http
  
-backend bk_http
+backend bk_http ###HOSTS ARE ADDED TO THIS BACKEND BY DEFAULT
 
 mode http
 cookie SRVNAME insert
