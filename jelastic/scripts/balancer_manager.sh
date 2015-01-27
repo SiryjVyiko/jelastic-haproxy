@@ -18,7 +18,7 @@ function _add_common_host(){
 
 
 function _remove_common_host(){
-    sed -i '/'${host}'/d' ${CARTRIDGE_HOME}/versions/1.5.8/conf/haproxy.conf;
+    sed -i '/server.*webserver.*'${host}'/d' ${CARTRIDGE_HOME}/versions/1.5.8/conf/haproxy.conf;
 }
 
 
