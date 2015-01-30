@@ -32,15 +32,15 @@ if [ -L $0 ]; then
   BASENAME=`basename $BASENAME`
 fi
 
-[ -f ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/conf/$BASENAME.conf ] || exit 1
+[ -f ${OPENSHIFT_HAPROXY_DIR}/versions/$version/conf/$BASENAME.conf ] || exit 1
 
 RETVAL=0
 
-sudo /usr/sbin/setcap cap_net_bind_service=+ep ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/bin/haproxy
+sudo /usr/sbin/setcap cap_net_bind_service=+ep ${OPENSHIFT_HAPROXY_DIR}/versions/$version/bin/haproxy
 
 start() {
   [ -z `ps aux | grep haproxy | grep -v grep` ] && { rm -f ${OPENSHIFT_HAPROXY_DIR}/run/haproxy.pid; rm -f ${OPENSHIFT_HAPROXY_DIR}/lock/subsys/haproxy; }
-  ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/bin/haproxy -c -q -f ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/conf/haproxy.conf
+  ${OPENSHIFT_HAPROXY_DIR}/versions/$version/bin/haproxy -c -q -f ${OPENSHIFT_HAPROXY_DIR}/versions/$version/conf/haproxy.conf
   if [ $? -ne 0 ]; then
     echo "Errors found in configuration file, check it with '$BASENAME check'."
     return 1
@@ -50,7 +50,7 @@ start() {
   return 1
   fi
   echo -n "Starting $BASENAME: "
-  daemon ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/bin/haproxy -D -f ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/conf/haproxy.conf -p ${OPENSHIFT_HAPROXY_DIR}/run/$BASENAME.pid
+  daemon ${OPENSHIFT_HAPROXY_DIR}/versions/$version/bin/haproxy -D -f ${OPENSHIFT_HAPROXY_DIR}/versions/$version/conf/haproxy.conf -p ${OPENSHIFT_HAPROXY_DIR}/run/$BASENAME.pid
   RETVAL=$?
   echo
   [ $RETVAL -eq 0 ] && touch ${OPENSHIFT_HAPROXY_DIR}/lock/subsys/$BASENAME
@@ -59,7 +59,7 @@ start() {
 
 stop() {
   echo -n "Shutting down $BASENAME: "
-  killproc ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/bin/$BASENAME -USR1
+  killproc ${OPENSHIFT_HAPROXY_DIR}/versions/$version/bin/$BASENAME -USR1
   RETVAL=$?
   echo
   [ $RETVAL -eq 0 ] && rm -f ${OPENSHIFT_HAPROXY_DIR}/lock/subsys/$BASENAME
@@ -68,7 +68,7 @@ stop() {
 }
 
 restart() {
-  ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/bin/haproxy -c -q -f ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/conf/haproxy.conf
+  ${OPENSHIFT_HAPROXY_DIR}/versions/$version/bin/haproxy -c -q -f ${OPENSHIFT_HAPROXY_DIR}/versions/$version/conf/haproxy.conf
   if [ $? -ne 0 ]; then
     echo "Errors found in configuration file, check it with '$BASENAME check'."
     return 1
@@ -78,16 +78,16 @@ restart() {
 }
 
 reload() {
-  ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/bin/haproxy -c -q -f ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/conf/haproxy.conf -p ${OPENSHIFT_HAPROXY_DIR}/run/haproxy.pid -sf $(cat ${OPENSHIFT_HAPROXY_DIR}/run/haproxy.pid)
+  ${OPENSHIFT_HAPROXY_DIR}/versions/$version/bin/haproxy -c -q -f ${OPENSHIFT_HAPROXY_DIR}/versions/$version/conf/haproxy.conf -p ${OPENSHIFT_HAPROXY_DIR}/run/haproxy.pid -sf $(cat ${OPENSHIFT_HAPROXY_DIR}/run/haproxy.pid)
   if [ $? -ne 0 ]; then
     echo "Errors found in configuration file, check it with '$BASENAME check'."
     return 1
   fi
-  ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/bin/haproxy -D -f ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/conf/haproxy.conf -p ${OPENSHIFT_HAPROXY_DIR}/run/haproxy.pid -sf $(cat ${OPENSHIFT_HAPROXY_DIR}/run/haproxy.pid)
+  ${OPENSHIFT_HAPROXY_DIR}/versions/$version/bin/haproxy -D -f ${OPENSHIFT_HAPROXY_DIR}/versions/$version/conf/haproxy.conf -p ${OPENSHIFT_HAPROXY_DIR}/run/haproxy.pid -sf $(cat ${OPENSHIFT_HAPROXY_DIR}/run/haproxy.pid)
 }
 
 check() {
-  ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/bin/haproxy -c -q -V -f ${OPENSHIFT_HAPROXY_DIR}/versions/1.5.8/conf/haproxy.conf
+  ${OPENSHIFT_HAPROXY_DIR}/versions/$version/bin/haproxy -c -q -V -f ${OPENSHIFT_HAPROXY_DIR}/versions/$version/conf/haproxy.conf
 }
 
 status() {
