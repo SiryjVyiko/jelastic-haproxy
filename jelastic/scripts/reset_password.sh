@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source /etc/jelastic/environment
+
 function _setPassword() {
   sed -i '/stats auth/d' /opt/repo/versions/$Cartridge_Version/conf/haproxy.conf;
   sed -i '/stats auth/d' /opt/repo/versions/$Cartridge_Version/haproxy.conf.default;
