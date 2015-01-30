@@ -10,7 +10,7 @@
 # Script Author: Simon Matter <simon.matter@invoca.ch>
 # Version: 2004060600
 
-source /etc/jelastic/environment
+source /etc/jelastic/environment;
 
 # Source function library.
 if [ -f /etc/init.d/functions ]; then
