@@ -36,16 +36,3 @@ Provides:
 Scaling:
   Min: 3
   Max: 6
-Endpoints:
-  - Private-IP-Name:   APP_HOST
-    Private-Port-Name: APP_PORT
-    Private-Port:      8080
-    Public-Port-Name:  APP_PROXY_PORT
-  - Private-IP-Name:   APP_HOST_HTTP
-    Private-Port-Name: APP_PORT_HTTP
-    Private-Port:      80
-    Public-Port-Name:  APP_PROXY_HTTP
-  - Private-IP-Name:   APP_HOST_HTTPS
-    Private-Port-Name: APP_PORT_HTTPS
-    Private-Port:      443
-    Public-Port-Name:  APP_PROXY_HTTPS
