@@ -41,8 +41,9 @@ RETVAL=0
 sudo /usr/sbin/setcap cap_net_bind_service=+ep ${OPENSHIFT_HAPROXY_DIR}/versions/$Cartridge_Version/bin/haproxy
 
 start() {
-  [ -z `ps aux | grep haproxy | grep -v grep` ] && { rm -f ${OPENSHIFT_HAPROXY_DIR}/run/haproxy.pid; rm -f ${OPENSHIFT_HAPROXY_DIR}/lock/subsys/haproxy; }
-  ${OPENSHIFT_HAPROXY_DIR}/versions/$Cartridge_Version/bin/haproxy -c -q -f ${OPENSHIFT_HAPROXY_DIR}/versions/$Cartridge_Version/conf/haproxy.conf
+  haproxy_proc=$(ps aux | grep haproxy | grep -v grep);
+  [ -z "$haproxy_proc" ] && { rm -f ${OPENSHIFT_HAPROXY_DIR}/run/haproxy.pid; rm -f ${OPENSHIFT_HAPROXY_DIR}/lock/subsys/haproxy; };
+  ${OPENSHIFT_HAPROXY_DIR}/versions/$Cartridge_Version/bin/haproxy -c -q -f ${OPENSHIFT_HAPROXY_DIR}/versions/$Cartridge_Version/conf/haproxy.conf;
   if [ $? -ne 0 ]; then
     echo "Errors found in configuration file, check it with '$BASENAME check'."
     return 1
