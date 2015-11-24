@@ -39,8 +39,7 @@ function _add_common_host(){
 
 function _remove_common_host(){
     sed -i '/server.*webserver.*'${host}'/d' ${CARTRIDGE_HOME}/versions/$Cartridge_Version/conf/haproxy.conf;
-    su - jelastic -c "${CARTRIDGE_HOME}/versions/$Cartridge_Version/bin/haproxy -D -f ${CARTRIDGE_HOME}/versions/$Cartridge_Version/conf/haproxy.conf -p ${CARTRIDGE_HOME}/run/haproxy.pid -sf $(cat ${CARTRIDGE_HOME}/run/haproxy.pid)"
-}
+    }
 
 
 function _add_host_to_group(){
