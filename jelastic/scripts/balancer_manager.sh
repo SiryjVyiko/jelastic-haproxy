@@ -6,6 +6,23 @@ function _set_neighbors(){
     return 0;
 }
 
+function rebuildCommon(){
+    su - jelastic -c "${CARTRIDGE_HOME}/versions/$Cartridge_Version/bin/haproxy -D -f ${CARTRIDGE_HOME}/versions/$Cartridge_Version/conf/haproxy.conf -p ${CARTRIDGE_HOME}/run/haproxy.pid -sf $(cat ${CARTRIDGE_HOME}/run/haproxy.pid)"
+}
+
+function addCommonHostConfig(){
+    grep -q "${host}:[0-9]* " ${CARTRIDGE_HOME}/versions/$Cartridge_Version/conf/haproxy.conf && return 0;
+    count=$(cat ${CARTRIDGE_HOME}/versions/$Cartridge_Version/conf/haproxy.conf | grep -o "webserver[0-9]*" | sed 's/webserver//g' | sort -n | tail -n1);
+    let "count+=1";
+    sed -i "/backend bk_http ###HOSTS/a\server webserver${count} ${host}:80 cookie S${count} check" /opt/repo/versions/$Cartridge_Version/conf/haproxy.conf;
+    su - jelastic -c "${CARTRIDGE_HOME}/versions/$Cartridge_Version/bin/haproxy -D -f ${CARTRIDGE_HOME}/versions/$Cartridge_Version/conf/haproxy.conf -p ${CARTRIDGE_HOME}/run/haproxy.pid -sf $(cat ${CARTRIDGE_HOME}/run/haproxy.pid)"
+}
+
+function removeCommonHostConfig(){
+    sed -i '/server.*webserver.*'${host}'/d' ${CARTRIDGE_HOME}/versions/$Cartridge_Version/conf/haproxy.conf;
+}
+
+
 function _rebuild_common(){
     su - jelastic -c "${CARTRIDGE_HOME}/versions/$Cartridge_Version/bin/haproxy -D -f ${CARTRIDGE_HOME}/versions/$Cartridge_Version/conf/haproxy.conf -p ${CARTRIDGE_HOME}/run/haproxy.pid -sf $(cat ${CARTRIDGE_HOME}/run/haproxy.pid)"
 }
