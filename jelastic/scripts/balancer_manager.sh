@@ -6,18 +6,6 @@ function _set_neighbors(){
     return 0;
 }
 
-function rebuildCommon(){
-    _rebuild_common;
-}
-
-function addCommonHostConfig(){
-    _add_common_host;
-}
-
-function removeCommonHostConfig(){
-    _remove_common_host;
-}
-
 function _rebuild_common(){
     su - jelastic -c "${CARTRIDGE_HOME}/versions/$Cartridge_Version/bin/haproxy -D -f ${CARTRIDGE_HOME}/versions/$Cartridge_Version/conf/haproxy.conf -p ${CARTRIDGE_HOME}/run/haproxy.pid -sf $(cat ${CARTRIDGE_HOME}/run/haproxy.pid)"
 }
