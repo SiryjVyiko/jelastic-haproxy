@@ -9,7 +9,7 @@ echo "jelastic ALL=(ALL) NOPASSWD: /usr/sbin/setcap" >> /etc/sudoers
 /sbin/iptables -I INPUT -p tcp --dport 443 -j ACCEPT
 /etc/init.d/iptables save
 
-[ -f /opt/repo/versions/$Cartridge_Version/haproxy.rsyslog ] && { cp -f /opt/repo/versions/$Cartridge_Version/haproxy.rsyslog /etc/rsyslog.d/haproxy.conf;}
-[ -f /opt/repo/versions/$Cartridge_Version/haproxy.logrotate ] && { cp -f /opt/repo/versions/$Cartridge_Version/haproxy.logrotate /etc/logrotate.d/haproxy;}
+[ -f /opt/repo/versions/$Version/haproxy.rsyslog ] && { cp -f /opt/repo/versions/$Version/haproxy.rsyslog /etc/rsyslog.d/haproxy.conf;}
+[ -f /opt/repo/versions/$Version/haproxy.logrotate ] && { cp -f /opt/repo/versions/$Version/haproxy.logrotate /etc/logrotate.d/haproxy;}
 
 /sbin/service rsyslog restart 2>/dev/null 1>/dev/null;
