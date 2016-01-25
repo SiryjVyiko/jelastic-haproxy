@@ -11,7 +11,7 @@ Cartridge-Vendor: Jelastic
 Categories:
   - service
   - embedded
-Source-Url: https://github.com/jelastic-public-cartridges/jelastic-haproxy.git
+Source-Url: https://github.com/SiryjVyiko/jelastic-haproxy.git
 Website: http://jelastic.com/
 Help-Topics:
   "Developer Center": https://jelastic.com
