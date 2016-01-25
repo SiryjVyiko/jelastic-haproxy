@@ -2,11 +2,11 @@ Name: haproxy
 Cartridge-Short-Name: HAPROXY
 Display-Name: HAPROXY
 Description: "Haproxy"
-Version: '1.5.8'
+Version: '1.6.3'
 License: 'Apache licence'
 License-Url: 
 Vendor: Eclipse
-Cartridge-Version: 1.5.8
+Cartridge-Version: 1.6.3
 Cartridge-Vendor: Jelastic
 Categories:
   - service
